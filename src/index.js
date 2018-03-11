@@ -10,9 +10,6 @@ import 'leaflet/dist/leaflet.css';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-import './L.D3SvgOverlay.min.js';
-import 'leaflet/dist/leaflet.js';
-
 Vue.component('v-map', Vue2Leaflet.Map);
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
 

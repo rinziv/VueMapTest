@@ -5,9 +5,13 @@
 </template>
 
 <script>
+import Ld3SvgOverlay from 'leaflet-d3-svg-overlay/L.D3SvgOverlay.js';
+import 'leaflet/dist/leaflet.js';
+
+
 export default {
   name: 'LMap',
-  props: [ 'options' ],
+  props: [ 'filename' ],
   data: function(){
     return {
       cities:[
@@ -26,12 +30,14 @@ export default {
     }
   },
   watch: {
-    options: function() {
+    filename: function(file) {
+      console.log("filename", file);
       this._remove()
       this._add()
     }
   },
   mounted () {
+    console.log("filename", this.filename);
     this._add()
   },
   beforeDestroy () {
@@ -60,8 +66,9 @@ export default {
       this.parent.removeLayer(this.mapObject)
     },
     _add () {
-      this.mapObject = L.d3SvgOverlay(this.drawCallback);
-      console.log('overlay', this.mapObject);
+      this.mapObject = Ld3SvgOverlay(this.drawCallback);
+      console.log('overlay', this.mapObject
+    );
       console.log('parent', this.$parent);
       if (this.$parent._isMounted) {
         this.deferredMountedTo(this.$parent.mapObject)
@@ -71,7 +78,7 @@ export default {
       var citiesUpd = sel.selectAll('circle').data(this.cities);
       citiesUpd.enter()
         .append('circle')
-        .attr('r',function(d){return Math.log2(d.population) - minLogPop + 2;})
+        .attr('r',function(d){return 10;})
         .attr('cx',function(d){return proj.latLngToLayerPoint([d.lat, d.lon]).x;})
         .attr('cy',function(d){return proj.latLngToLayerPoint([d.lat, d.lon]).y;})
         .attr('stroke','black')

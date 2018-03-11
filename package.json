@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "d3": "^4.13.0",
     "leaflet": "^1.3.1",
+    "leaflet-d3-svg-overlay": "github:rinziv/Leaflet.D3SvgOverlay",
     "vue": "^2.1.10",
     "vue-router": "^2.2.1",
     "vue2-leaflet": "0.0.58"
