@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <slot></slot>
-  </div>
+<div>
+  <slot></slot>
+</div>
 </template>
 
 <script>
@@ -10,9 +10,9 @@ import 'leaflet/dist/leaflet.js';
 
 
 export default {
-  name: 'LMap',
-  props: [ 'pointList' ],
-  data: function(){
+  name: 'SVGOverlay',
+  props: ['pointList'],
+  data: function() {
     return {
 
     }
@@ -24,15 +24,15 @@ export default {
       this._add()
     }
   },
-  mounted () {
+  mounted() {
     console.log("pointListM", this.pointList);
     this._add()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this._remove()
   },
   methods: {
-    deferredMountedTo (parent) {
+    deferredMountedTo(parent) {
       this.parent = parent
       console.log("parent", parent);
       this.mapObject.addTo(parent);
@@ -50,28 +50,33 @@ export default {
       //   )
       // )
     },
-    _remove () {
+    _remove() {
       this.parent.removeLayer(this.mapObject)
     },
-    _add () {
+    _add() {
       this.mapObject = Ld3SvgOverlay(this.drawCallback);
-      console.log('overlay', this.mapObject
-    );
+      console.log('overlay', this.mapObject);
       console.log('parent', this.$parent);
       if (this.$parent._isMounted) {
         this.deferredMountedTo(this.$parent.mapObject)
       }
     },
-    drawCallback: function(sel, proj){
+    drawCallback: function(sel, proj) {
       var citiesUpd = sel.selectAll('circle').data(this.pointList);
       citiesUpd.exit().remove();
       citiesUpd.enter()
         .append('circle')
-        .attr('r',function(d){return 2;})
-        .attr('cx',function(d){return proj.latLngToLayerPoint([d.lat, d.lon]).x;})
-        .attr('cy',function(d){return proj.latLngToLayerPoint([d.lat, d.lon]).y;})
-        .attr('stroke','black')
-        .attr('stroke-width',1)
+        .attr('r', function(d) {
+          return 2;
+        })
+        .attr('cx', function(d) {
+          return proj.latLngToLayerPoint([d.lat, d.lon]).x;
+        })
+        .attr('cy', function(d) {
+          return proj.latLngToLayerPoint([d.lat, d.lon]).y;
+        })
+        .attr('stroke', 'black')
+        .attr('stroke-width', 1)
         .attr('fill', "red");
     }
   }
