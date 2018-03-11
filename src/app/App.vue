@@ -12,7 +12,7 @@ import SVGOverlay from './components/lmap/SVGOverlay.vue';
 import CanvasOverlay from './components/lmap/CanvasOverlay.vue';
 
 export default {
-  name: 'Hello',
+  name: 'App',
   components: {
     SVGOverlay,
     CanvasOverlay

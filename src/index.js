@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import Hello from './app/Hello.vue';
+import App from './app/App.vue';
 import Vue2Leaflet from 'vue2-leaflet';
 
 import './index.css';
@@ -19,7 +19,7 @@ const router = new VueRouter({
     {
       path: '/',
       components: {
-        default: Hello
+        default: App
       }
     }
   ]
