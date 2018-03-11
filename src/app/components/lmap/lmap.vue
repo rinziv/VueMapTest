@@ -11,33 +11,21 @@ import 'leaflet/dist/leaflet.js';
 
 export default {
   name: 'LMap',
-  props: [ 'filename' ],
+  props: [ 'pointList' ],
   data: function(){
     return {
-      cities:[
-        {
-          city:'Genève',
-          population:195177,
-          lon:6.1466014,
-          lat:46.2017559
-        },{
-            city:'Lausanne',
-            population:132626,
-            lon:6.6327025,
-            lat:46.5218269
-        }
-      ]
+
     }
   },
   watch: {
-    filename: function(file) {
-      console.log("filename", file);
+    pointList: function(pl) {
+      console.log("pointlist", pl);
       this._remove()
       this._add()
     }
   },
   mounted () {
-    console.log("filename", this.filename);
+    console.log("pointListM", this.pointList);
     this._add()
   },
   beforeDestroy () {
@@ -75,10 +63,11 @@ export default {
       }
     },
     drawCallback: function(sel, proj){
-      var citiesUpd = sel.selectAll('circle').data(this.cities);
+      var citiesUpd = sel.selectAll('circle').data(this.pointList);
+      citiesUpd.exit().remove();
       citiesUpd.enter()
         .append('circle')
-        .attr('r',function(d){return 10;})
+        .attr('r',function(d){return 2;})
         .attr('cx',function(d){return proj.latLngToLayerPoint([d.lat, d.lon]).x;})
         .attr('cy',function(d){return proj.latLngToLayerPoint([d.lat, d.lon]).y;})
         .attr('stroke','black')

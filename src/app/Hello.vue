@@ -2,7 +2,7 @@
     <div id="app" style="height: 100%">
     <v-map :zoom=9 :center="[46.5218269,6.6327025]">
       <v-tilelayer url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png" attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'></v-tilelayer>
-      <LMap filename="test.csv"></LMap>
+      <LMap :pointList="cities"></LMap>
     </v-map>
   </div>
 </template>
@@ -15,10 +15,38 @@ export default {
   components: {
     LMap
   },
-  data() {
+  data: function() {
     return {
-      hello: 'Hello World!'
+      hello: 'Hello World!',
+      cities:[
+        {
+          city:'Genève',
+          population:195177,
+          lon:6.1466014,
+          lat:46.2017559
+        },{
+            city:'Lausanne',
+            population:132626,
+            lon:6.6327025,
+            lat:46.5218269
+        }
+      ]
     };
+  },
+  mounted: function(){
+    let that = this.cities;
+    d3.csv("seeds2.csv", function(row){
+      let r = {
+        cid:+row['cid'],
+        lat:+row['lat'],
+        lon:+row['lon']
+      };
+      that.push(r);
+      return r;
+    },
+    function(error, data){
+
+    })
   }
 };
 </script>
